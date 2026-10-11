@@ -1,0 +1,43 @@
+erDiagram
+    AUTHOR ||--o{ BOOK_AUTHOR : writes
+    BOOK ||--o{ BOOK_AUTHOR : "written by"
+    BOOK ||--o{ LOAN : "is loaned in"
+    MEMBER ||--o{ LOAN : takes
+
+    AUTHOR {
+        int author_id PK
+        string first_name
+        string last_name
+        string country "nullable"
+    }
+
+    BOOK {
+        int book_id PK
+        string title
+        string isbn "unique"
+        int publication_year "not later than current year"
+        string genre "nullable"
+    }
+
+    BOOK_AUTHOR {
+        int book_id PK, FK
+        int author_id PK, FK
+    }
+
+    MEMBER {
+        int member_id PK
+        string first_name
+        string last_name
+        string email "unique"
+        string phone "nullable"
+        date registration_date
+    }
+
+    LOAN {
+        int loan_id PK
+        int book_id FK
+        int member_id FK
+        date loan_date
+        date due_date "loan_date + 14 days"
+        date return_date "nullable, null = not returned yet"
+    }
